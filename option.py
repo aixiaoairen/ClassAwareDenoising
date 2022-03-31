@@ -21,6 +21,7 @@ def option():
                         help="The Number of Process")
     parser.add_argument('--batch_size', type=int, default=64,
                         help="Batch Size of Training (default: 64)")
+    parser.add_argument('--peak', type=float, default=4.0, help="the peak value of poisson noise")
     # Optimizer
     parser.add_argument('--lr', type=float, default=1e-4,
                         help="Initialized Learning Rate (default: 1e-4)")
