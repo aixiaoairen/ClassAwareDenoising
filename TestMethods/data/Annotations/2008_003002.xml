@@ -1,0 +1,47 @@
+<annotation>
+	<folder>VOC2008</folder>
+	<filename>2008_003002.jpg</filename>
+	<source>
+		<database>The VOC2008 Database</database>
+		<annotation>PASCAL VOC2008</annotation>
+		<image>flickr</image>
+		<flickrid>n/a</flickrid>
+	</source>
+	<owner>
+		<flickrid>n/a</flickrid>
+		<name>n/a</name>
+	</owner>
+	<size>
+		<width>332</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>person</name>
+		<bndbox>
+			<xmin>36.9581</xmin>
+			<ymin>215.2695</ymin>
+			<xmax>148.9341</xmax>
+			<ymax>496.7066</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>person</name>
+		<bndbox>
+			<xmin>131.5689</xmin>
+			<ymin>203.8922</ymin>
+			<xmax>227.3772</xmax>
+			<ymax>497.3054</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>person</name>
+		<bndbox>
+			<xmin>198.6347</xmin>
+			<ymin>232.0359</ymin>
+			<xmax>313.006</xmax>
+			<ymax>497.3054</ymax>
+		</bndbox>
+	</object>
+</annotation>
