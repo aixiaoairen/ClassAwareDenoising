@@ -2,6 +2,7 @@ import os
 import torch
 import numpy as np
 import DataTools as Tool
+import option as op
 import torch.optim as optim
 from network import CADET
 from Datasets import SimulateTrain
@@ -9,6 +10,9 @@ from torch.utils.data import DataLoader
 from utils import weight_init_kaiming
 from skimage.metrics import peak_signal_noise_ratio as psnr
 from skimage.metrics import structural_similarity as ssim
+
+# 加载配置文件
+args = op.option()
 
 def Train(net, datasets, optimizer, criterion, model_dir, batch_size=64, epochs=100):
     """
@@ -54,24 +58,35 @@ def Train(net, datasets, optimizer, criterion, model_dir, batch_size=64, epochs=
             'loss': train_epochs_loss
         }, os.path.join(model_dir, 'model{}.pth'.format(str(epoch+1).zfill(2))))
 
-def main(model_dir):
-    lr = 1e-4
-    batch_size = 64
-    epochs = 60
+def main():
+    lr = args.lr
+    batch_size = args.batch_size
+    epochs = args.epochs
+    model = CADET(in_channels=args.in_channel, wf=args.wf)
+    if args.resume == False:
+        # 初始化权重参数
+        model = weight_init_kaiming(model)
+        model_dir = args.model_dir
+    else:
+        path = os.path.join(args.model, args.checkpoint)
+        checkpoint = torch.load(path)
+        state_dict_one = model.state_dict()
+        for name, value in checkpoint["model_state_dict"].items():
+            state_dict_one[name] = value
+        model.load_state_dict(state_dict_one)
+        model_dir = args.model_resume_dir
+    # 检查存储路径是否存在
     if os.path.exists(model_dir) == False:
         os.mkdir(model_dir)
-    model = CADET(in_channels=1, wf=63)
-    # 初始化权重参数
-    model = weight_init_kaiming(model)
     # 加速
-    model = model.cuda()
+    if torch.cuda.is_available():
+        model = model.cuda()
     # 准备数据集
-    datasets = {
-        "JPEGImages" : "*.jpg"
-    }
-    dirpath = "./TestMethods/data"
+    datasets = args.datasets
+    dirpath = args.data_dir
     train_paths = np.array(sorted(Tool.get_gt_image(dirpath, datasets)))
-    traindatasets = SimulateTrain(im_list=train_paths, length=64, patch_size=128, peak=20)
+    # print(len(train_paths))
+    traindatasets = SimulateTrain(im_list=train_paths, length=args.batch_size, patch_size=args.patch_size, peak=args.peak)
     optimizer = optim.Adam(params=model.parameters(), lr=lr)
     criterion = torch.nn.MSELoss()
     print("开始训练")
@@ -79,5 +94,4 @@ def main(model_dir):
     print("结束训练")
 
 if __name__ == '__main__':
-    model_dir = "F:\\Program File\\DataSpell\\Projetcs\\ImageDenoising\\ConvolutionalPoissonNoise\\dsProject\\Models"
-    main(model_dir)
+    main()

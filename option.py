@@ -7,12 +7,13 @@ import argparse
 def option():
     parser = argparse.ArgumentParser()
     # Path to Save some files
-    parser.add_argument('--model_dir', type=str, default=".\Model",
+    parser.add_argument('--model_dir', type=str, default="Model",
                         help='The Path to save training model')
-    parser.add_argument('--data_dir', type=str, default="TestMethod\data")
+    parser.add_argument('--model_resume_dir', type=str, default="Model_Resume")
+    parser.add_argument('--data_dir', type=str, default="TestMethods\\data")
     parser.add_argument('--datasets', type=dict, default={
-        "JPEGImages": "*.jpg"
-    },
+                              "JPEGImages": "*.jpg"
+                                },
                         help="The Name and type of DataSets")
     # Make DataSet and Load data to memory
     parser.add_argument('--patch_size', type=int, default=128,
@@ -34,8 +35,7 @@ def option():
                         help="Train Epochs (default: 120)")
     parser.add_argument('--resume', type=bool, default=False,
                         help="Judge Whether The Training")
-
+    parser.add_argument('--checkpoint', type=str, default="model40.pth",
+                        help="The File Name of checkpoint which had been trained")
     args = parser.parse_args()
     return args
-
-
