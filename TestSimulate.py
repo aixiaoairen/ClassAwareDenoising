@@ -58,11 +58,11 @@ def main():
     datasets = {
         "JPEGImages": "*.jpg"
     }
-    dirpath = "F:\\Program File\\DataSpell\\Projetcs\\ImageDenoising\\ConvolutionalPoissonNoise\\dsProject\\TestMethods\\data"
+    dirpath = "TestMethods/data"
     train_paths = np.array(sorted(Tools.get_gt_image(dirpath, datasets)))
     SimulateData = SimulateTrain(im_list=train_paths, length=64, patch_size=128, peak=4.0)
     Model = CADET(in_channels=1, wf=63)
-    modelpath = "F:\\Program File\\DataSpell\\Projetcs\\ImageDenoising\\ConvolutionalPoissonNoise\\dsProject\\Model\\model_resume2\\model020.pth"
+    modelpath = "Model/model_resume2/model020.pth"
     checkpoint = torch.load(modelpath)
     state_dict_one = Model.state_dict()
     for name, value in checkpoint["model_state_dict"].items():
