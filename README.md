@@ -18,3 +18,4 @@ The denoising effect is barely satisfactory.
 # Note
 This should be the first formal reproduction of my entry into the field of deep learning, in which the code structure is chaotic, and I will gradually optimize my programming style in the future learning process.
 
+# 2. [New Version (pytorch)](https://github.com/aixiaoairen/ClassicalPoissonDenoising/tree/master/ClassAware)
